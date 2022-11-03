@@ -48,24 +48,46 @@ document.querySelector('#max_cups').innerText = MAX_NUM_OF_CUPS;
  *                  ákveðinn bolla.
  * @returns 
  */
-function onCupClick(e) {
-  // TODO útfæra
-}
+ function onCupClick(e) {
+  state.played += 1;
+  if (state.currentCup === Number.parseInt(e.target.dataset.num)) {
+    // Þegar notandi velur rétta bolla.
+    console.log('state.currentPointsAvailable :>> ', state.currentPointsAvailable);
+    e.target.classList.add('cup__button--correct');
+    // TODO
+    // þegar notandi velur rett sýna rauðan bolta
+    // skoða create cup og setja inn rauðan bolta;
+    state.points += state.currentPointsAvailable;
+    document.getElementById('points').innerText = state.points;
+    document.getElementById('games').innerText = state.played;
+    console.log('win :>> ', 'win');
+  } else {
+    e.target.classList.add('cup__button--wrong');
+    // TODO 
+    // þegar notandi velur rangt remove mynd af bolla
 
+    console.log('lose :>> ', 'lose');
+    document.getElementById('games').innerText = state.played;
+
+  }
+  showScreen('waiting');
+  console.log(e.target.dataset.num);
+}
+//eyða console.log alls staðar
 /**
  * Tæmir `parent` og býr til `num` bollum og setur þangað inn.
  * @param {number} num Fjöldi bolla
  * @param {element} parent Element sem á að setja bollana inn í.
  */
-  // TODO útfæra SKOÐA SÍÐAR FALL FYRIR NEÐAN
+ function createCups(num, parent) {
+  emptyElement(parent)
 
-function createCups(num, parent) {
-  emptyElement(parent);
-  for (let i = 0; i < num; i++) {
-    const cup = createCup(i, onCupClick);
-    parent.appendChild(cup);ß
+  for (let i = 1; i <= num; i++) {
+    const cup = createCup(i, svg, onCupClick);
+    parent.appendChild(cup);
   }
 }
+
 /**
  * Meðhöndlar það að notandi byrjar leikinn með því að skrá fjölda bolla og ýta
  * á takkann eða ýta á enter.
@@ -77,14 +99,28 @@ function createCups(num, parent) {
  *
  * @param {event} e Atburður sem átti sér stað þegar form var sent.
  */
-function onFormSubmit(e) {
+ function onFormSubmit(e) {
   e.preventDefault();
+  console.log(e)
 
+  const input = e.target.querySelector('input')
+  const value = input.value;
+
+  const isValid = isValidNum(value, MIN_NUM_OF_CUPS, MAX_NUM_OF_CUPS);
   const formError = document.querySelector('.form__error');
-
   formError.classList.add('form__error--hidden');
 
-  // TODO útfæra
+  const valueAsNumber = Number.parseInt(value)
+  state.currentPointsAvailable = valueAsNumber - 1;
+  console.log('state.currentPointsAvailable :>> ', state.currentPointsAvailable);
+  if (isValid) {
+    showScreen('main');
+    createCups(valueAsNumber, document.querySelector('.cups'))
+    state.currentCup = Math.abs(randomNumber(1, valueAsNumber));
+    console.log('state.currentCup :>> ', state.currentCup);
+  } else {
+    formError.classList.remove('form__error--hidden');
+  }
 }
 
 // Tengir event handler við formið.
