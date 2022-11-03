@@ -57,10 +57,15 @@ function onCupClick(e) {
  * @param {number} num Fjöldi bolla
  * @param {element} parent Element sem á að setja bollana inn í.
  */
-function createCups(num, parent) {
-  // TODO útfæra
-}
+  // TODO útfæra SKOÐA SÍÐAR FALL FYRIR NEÐAN
 
+function createCups(num, parent) {
+  emptyElement(parent);
+  for (let i = 0; i < num; i++) {
+    const cup = createCup(i, onCupClick);
+    parent.appendChild(cup);ß
+  }
+}
 /**
  * Meðhöndlar það að notandi byrjar leikinn með því að skrá fjölda bolla og ýta
  * á takkann eða ýta á enter.
@@ -84,3 +89,4 @@ function onFormSubmit(e) {
 
 // Tengir event handler við formið.
 document.querySelector('form').addEventListener('submit', onFormSubmit);
+

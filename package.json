@@ -1,0 +1,32 @@
+{
+  "name": "vef1-v8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "browser-sync start --server --files main.js **/*.js styles.css index.html",
+    "copy:html": "cpy ./*.html ./build/",
+    "copy:js": "cpy ./*.js ./build/",
+    "copy:jslib": "cpy ./lib ./build/",
+    "copy:css": "cpy ./*.css ./build/",
+    "build": "concurrently npm:copy:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thorvaldurl/vef1-v8.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Thorvaldurl/vef1-v8/issues"
+  },
+  "homepage": "https://github.com/Thorvaldurl/vef1-v8#readme",
+  "dependencies": {
+    "browser-sync": "^2.27.10",
+    "concurrently": "^7.5.0",
+    "cpy-cli": "^4.2.0"
+  }
+}
